@@ -1,0 +1,20 @@
+.movie-detail{
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.movie-card{
+    display: flex;
+    gap: 40px;
+    background-color: #ddd;
+    padding: 20px;
+    border-radius: 40px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.movie-card img{
+    width: 300px;
+    height: auto;
+    border-radius: 40px;
+}

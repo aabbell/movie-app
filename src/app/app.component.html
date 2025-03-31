@@ -5,25 +5,34 @@
     <input type="text" placeholder="Search for Movies" [(ngModel)] = "searchTerm" (keyup.enter)="onSearch()">
     <mat-icon aria-hidden="false" aria-label="" fontIcon="search" (click) = "onSearch()"></mat-icon>
   </div>
+  <div *ngIf="showListView">
   <div *ngIf = "movies.length > 0; else noMovies" class="container">
-    <div *ngFor = "let movie of movies" class="moive">
-      <div>
-      <p>{{movie.Title}}</p>
-    </div>
-    <div>
+    <div *ngFor = "let movie of movies" class="moive" (click)="selectMovie(movie)">
+    <div class="image">
       <img [src]= "movie.Poster !== 'N/A' ? movie.Poster : 'http://via.placeholder.com/400'" alt="moive.Title">
     </div>
     <div>
+      <p><strong>{{movie.Title}}</strong></p>
       <span>{{movie.Type}}</span>
-      <h3> {{movie.tit}} </h3>
+      <h3> {{movie.Year}} </h3>
     </div>
   </div>
 </div>
+
 
 <ng-template #noMovies>
   <div class="empty">
     <h2>No Movie Found</h2>
   </div>
 </ng-template>
+</div>
+
+<div *ngIf="!showListView">
+  <button (click) = 'backToList() ' class="backButton">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <app-movie-detail *ngIf = 'selectedMovie' [movie]="selectedMovie"></app-movie-detail>
+</div>
+
 
 </div>
