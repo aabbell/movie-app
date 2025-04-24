@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms'
 import {MatIconModule} from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
+import { NavComponent } from './nav/nav.component';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -13,34 +15,62 @@ import { MovieDetailComponent } from './movie-detail/movie-detail.component';
           MatIconModule,
           FormsModule,
           MovieDetailComponent,
+          NavComponent,
           ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'movie-app';
+  title = '';
   searchTerm:string = ''
   movies:any[] = []
   selectedMovie: any = null
   showListView: boolean = true
+  watchlst:boolean = false
 
-  private API_URL = "http://www.omdbapi.com/?i=tt3896198&apikey=a69c7b0e"
 
+  private readonly API_KEY = environment.API;
+  private readonly Base_URL = environment.BASE_URL;
+ 
+  
   constructor(private http: HttpClient){
-    this.searchMoives('cars')
+    this.loadPopular()
+
+  }
+  
+  loadPopular():void{
+    const url =  (`${this.Base_URL}/movie/popular?api_key=${this.API_KEY}`)
+    console.log(url)
+    this.fetchMovies(url)
   }
 
   searchMoives(title:string):void{
-      this.http.get<any>(`${this.API_URL}&s=${title}`).subscribe((response) => { 
-        this.movies = response.Search || []
-        this.selectedMovie = null
-        console.log(response)
-      })
+    if(!title.trim()){
+      this.loadPopular()
+      return
+
+    }else{
+      const url = (`${this.Base_URL}/search/movie?api_key=${this.API_KEY}&query=${encodeURIComponent(title)}`)
+      this.fetchMovies(url)
+    }  
+  }
+  fetchMovies(url:string):void{
+    this.http.get<any>(url).subscribe({
+      next:(response) =>{ 
+      this.movies = response.results || []
+      console.log(this.movies)
+      this.selectedMovie = null
+      console.log(response)
+      },
+      error: (err) =>{
+        console.error('error fetching movies: ', err)
+        this.movies = []
+      }
+  })
   }
   onSearch():void{
-    if (this.searchTerm.trim()){
       this.searchMoives(this.searchTerm)
-    }
+  
   }
 
   selectMovie(movie: any): void{
@@ -52,4 +82,6 @@ export class AppComponent {
     this.selectedMovie = null
     this.showListView = true
   }
+  
 }
+ 

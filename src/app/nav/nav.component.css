@@ -1,0 +1,9 @@
+.nav{
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+
+}
+h1{
+    color:rgb(55, 72, 224);
+}

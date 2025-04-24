@@ -1,5 +1,5 @@
 <div class="app">
-  <h1>Movie Application</h1>
+  <app-nav></app-nav>
 
   <div class="search">
     <input type="text" placeholder="Search for Movies" [(ngModel)] = "searchTerm" (keyup.enter)="onSearch()">
@@ -9,12 +9,12 @@
   <div *ngIf = "movies.length > 0; else noMovies" class="container">
     <div *ngFor = "let movie of movies" class="moive" (click)="selectMovie(movie)">
     <div class="image">
-      <img [src]= "movie.Poster !== 'N/A' ? movie.Poster : 'http://via.placeholder.com/400'" alt="moive.Title">
+      <img [src]= "movie.poster_path !== 'N/A' ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path: 'http://via.placeholder.com/400'" [alt]="movie.original_title">
     </div>
     <div>
-      <p><strong>{{movie.Title}}</strong></p>
-      <span>{{movie.Type}}</span>
-      <h3> {{movie.Year}} </h3>
+      <p><strong>{{movie.title}}</strong></p>
+     
+      <h3> {{movie.release_date}} </h3>
     </div>
   </div>
 </div>
