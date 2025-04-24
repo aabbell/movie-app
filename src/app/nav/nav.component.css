@@ -1,9 +1,71 @@
-.nav{
-    display: flex;
-    justify-content: center;
-    border-radius: 5px;
-
+.nav-container{
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
-h1{
-    color:rgb(55, 72, 224);
+
+.nav-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+}
+
+.logo-text{
+    font-family: 'Montserrat' ,sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    background: linear-gradient(to right, #00b4db, #0083b0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0;
+    letter-spacing: 2px;
+}
+.selector-container {
+    width: 250px;
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: rgba(255, 255, 255, 0.3) !important;
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+    color: #00b4db !important;
+}
+
+::ng-deep .mat-form-field-label {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+::ng-deep .mat-select-value {
+    color: white !important;
+}
+::ng-deep .mat-select-arrow {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+::ng-deep .options-panel {
+    background: #16213e !important;
+    border: 1px solid #00b4db;
+    margin-top: 5px;
+}
+.options-item{
+    display: flex !important;
+    align-items: center;
+    padding: 0.5rem 1rem !important;
+    color: white;
+}
+
+.selected{
+    background: linear-gradient(to right, #00b4db, #0083b0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
