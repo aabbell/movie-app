@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
@@ -11,6 +11,7 @@ interface Option{
 
 @Component({
   selector: 'app-nav',
+  standalone: true,
   imports: [
      MatFormFieldModule,
      MatSelectModule, 
@@ -20,10 +21,17 @@ interface Option{
   styleUrl: './nav.component.css'
 })
 export class NavComponent {
+  @Output() optionSelected = new EventEmitter<string>()
+  selectedOption = 'popular'
+
   options: Option[] = [
-    {value: 'popular-0', viewValue: 'Popular'},
-    {value: 'now-playing' , viewValue: 'Now Playing'},
+    {value: 'popular', viewValue: 'Popular'},
+    {value: 'now_playing' , viewValue: 'Now Playing'},
     {value: 'upcoming', viewValue: 'upcoming'},
-    {value: 'Top Rated', viewValue: 'Top Rated'},
-  ];
+    {value: 'top_rated', viewValue: 'Top Rated'},
+  ]
+  onSelectionChange():void{
+    console.log('selected option: ' ,this.selectedOption)
+    this.optionSelected.emit(this.selectedOption)
+  }
 }

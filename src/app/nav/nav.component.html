@@ -7,8 +7,8 @@
     <div class="selector"></div>
     <mat-form-field appearance="outline" floatLabel="always">
         <mat-label>movie options</mat-label>
-            <mat-select class="selected">
-                @for (option of options; track option) {
+            <mat-select class="selected" [(ngModel)]="selectedOption" (selectionChange)="onSelectionChange()">
+                @for (option of options; track option.value) {
                     <mat-option [value]="option.value" class="option-item">{{option.viewValue}}</mat-option>
                 }
                 </mat-select>

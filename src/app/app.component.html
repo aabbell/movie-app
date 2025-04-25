@@ -1,5 +1,8 @@
-<div class="app">
-  <app-nav></app-nav>
+<div *ngIf = "isLoading" class="loading">
+  <mat-spinner diameter = '50'></mat-spinner>
+</div>
+<div class="app" [class.blur-content]="isLoading">
+  <app-nav (optionSelected)="onOptionSelected($event)"></app-nav>
 
   <div class="search">
     <input type="text" placeholder="Search for Movies" [(ngModel)] = "searchTerm" (keyup.enter)="onSearch()">

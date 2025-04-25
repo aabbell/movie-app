@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { NavComponent } from './nav/nav.component';
 import { environment } from '../environments/environment';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-root',
   imports: [
@@ -16,6 +16,7 @@ import { environment } from '../environments/environment';
           FormsModule,
           MovieDetailComponent,
           NavComponent,
+          MatProgressSpinnerModule
           ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -27,6 +28,7 @@ export class AppComponent {
   selectedMovie: any = null
   showListView: boolean = true
   watchlst:boolean = false
+  isLoading: boolean = false
 
 
   private readonly API_KEY = environment.API;
@@ -34,33 +36,44 @@ export class AppComponent {
  
   
   constructor(private http: HttpClient){
-    this.loadPopular()
+    this.loadMovies('popular')
 
   }
   
-  loadPopular():void{
-    const url =  (`${this.Base_URL}/movie/popular?api_key=${this.API_KEY}`)
+  loadMovies(option:string):void{
+    this.isLoading = true
+    const url =  (`${this.Base_URL}/movie/${option}?api_key=${this.API_KEY}`)
     console.log(url)
     this.fetchMovies(url)
   }
+  
 
-  searchMoives(title:string):void{
+  onOptionSelected(option:string):void{
+    console.log('option received in app: ', option)
+    this.loadMovies(option)
+  }
+
+  searchMovies(title:string):void{
+    this.isLoading = true
     if(!title.trim()){
-      this.loadPopular()
+      this.loadMovies('popular')
       return
 
     }else{
       const url = (`${this.Base_URL}/search/movie?api_key=${this.API_KEY}&query=${encodeURIComponent(title)}`)
+      console.log(url)
       this.fetchMovies(url)
     }  
   }
   fetchMovies(url:string):void{
+    this.isLoading = true
     this.http.get<any>(url).subscribe({
       next:(response) =>{ 
       this.movies = response.results || []
       console.log(this.movies)
       this.selectedMovie = null
       console.log(response)
+      this.isLoading = false
       },
       error: (err) =>{
         console.error('error fetching movies: ', err)
@@ -69,7 +82,7 @@ export class AppComponent {
   })
   }
   onSearch():void{
-      this.searchMoives(this.searchTerm)
+      this.searchMovies(this.searchTerm)
   
   }
 
